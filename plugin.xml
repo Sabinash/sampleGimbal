@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+    xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="com.gimbal.android.sample"
+    version="4.2.9">
+
+   <name>Gimbal iBeacon</name>
+
+   <description>
+      Provides access to the standard interface that manages the beacons
+   </description>
+
+   <license>MIT</license>
+
+   <engines>
+      <engine name="cordova" version=">=3.0.0" />
+   </engines>
+
+   <js-module src="www/Beacon.js" name="Beacon">
+      <clobbers target="Beacon" />
+   </js-module>
+
+   <!-- android -->
+   <platform name="android">
+      <config-file target="res/xml/config.xml" parent="/*">
+         <feature name="Beacon">
+            <param name="android-package" value="com.gimbal.android.sample.Beacon" />
+         </feature>
+      </config-file>
+	<config-file target="AndroidManifest.xml" parent="/manifest/application">
+	<service
+    android:name="com.gimbal.internal.service.GimbalService"
+    android:exported="false" >
+     <intent-filter>
+         <action android:name="com.gimbal.android.sample.service.GIMBAL_SERVICE" />
+     </intent-filter>
+    </service>
+
+    <receiver
+     android:name="com.gimbal.internal.service.GimbalServiceStartStopReceiver"
+     android:enabled="true" >
+        <intent-filter>
+          <action android:name="android.intent.action.BOOT_COMPLETED" />
+        </intent-filter>
+        <intent-filter>
+          <action android:name="android.intent.action.ACTION_SHUTDOWN" />
+        </intent-filter>
+    </receiver>
+	</config-file>
+    <config-file target="AndroidManifest.xml" parent="/manifest">
+    <uses-permission android:name="android.permission.READ_CALENDAR"/>
+    <uses-permission android:name="android.permission.WRITE_CALENDAR"/>
+	<uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+     </config-file>
+     <source-file src="src/android/com/gimbal/android/sample/Beacon.java" target-dir="src/com/gimbal/android/sample" />
+	 <source-file src="src/android/com/gimbal/android/sample/gimballibs/gimbal.jar" target-dir="libs" framework="true" />
+	 <source-file src="src/android/com/gimbal/android/sample/gimballibs/gimbal-dev-logging.jar" target-dir="libs" framework="true" />
+	 <source-file src="src/android/com/gimbal/android/sample/gimballibs/spring-android-rest-template-1.0.1.RELEASE.jar" target-dir="libs" framework="true" />
+	 <source-file src="src/android/com/gimbal/android/sample/gimballibs/spring-android-core-1.0.1.RELEASE.jar" target-dir="libs" framework="true" />
+	
+	 <source-file src="src/android/com/gimbal/android/sample/res/drawable/appicon.png" target-dir="res/drawable" framework="true" />
+	 <source-file src="src/android/com/gimbal/android/sample/res/drawable-hdpi/appicon.png" target-dir="res/drawable-hdpi" framework="true" />
+	 <source-file src="src/android/com/gimbal/android/sample/res/drawable-mdpi/appicon.png" target-dir="res/drawable-mdpi" framework="true" />
+	 <source-file src="src/android/com/gimbal/android/sample/res/drawable-xhdpi/appicon.png" target-dir="res/drawable-xhdpi" framework="true" />
+   </platform>
+</plugin>
